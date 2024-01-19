@@ -10,10 +10,10 @@ module.exports = async (req, res) => {
 
         const network = bitcoin.networks.bitcoin; // Change to bitcoin.networks.testnet for testnet
 
-        // Extract or generate mnemonics from the request
+        // Extract mnemonics from the request or generate new ones
         let { mnemonic1, mnemonic2 } = req.body;
-        mnemonic1 = mnemonic1 || bip39.generateMnemonic();
-        mnemonic2 = mnemonic2 || bip39.generateMnemonic();
+        mnemonic1 = (mnemonic1 && mnemonic1 !== "0") ? mnemonic1 : bip39.generateMnemonic();
+        mnemonic2 = (mnemonic2 && mnemonic2 !== "0") ? mnemonic2 : bip39.generateMnemonic();
 
         // Generate seeds from mnemonics
         const seed1 = bip39.mnemonicToSeedSync(mnemonic1);
